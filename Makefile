@@ -1,4 +1,4 @@
-CROSS_COMPILE = or1k-smh-linux-gnu-
+CROSS_COMPILE ?= or1k-smh-linux-gnu-
 CFLAGS        = -Wall -O2
 CC            = $(CROSS_COMPILE)gcc
 OBJDUMP       = $(CROSS_COMPILE)objdump
