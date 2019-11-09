@@ -69,7 +69,7 @@ check: test-results.out
 
 test-results-%.out: %
 	echo "Running $<..." > $@
-	( ./$< && echo ok || echo ng )  >> $@
+	( ./$< && echo ok || echo not ok )  >> $@
 
 test-results.out: $(all_results)
 	cat $^ > test-results.out
