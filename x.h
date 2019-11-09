@@ -1,1 +1,1 @@
-extern int x;
+extern __thread int x;

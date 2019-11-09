@@ -1,1 +1,1 @@
-int x;
+__thread int x;
