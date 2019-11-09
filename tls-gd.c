@@ -1,4 +1,4 @@
-extern __thread int x;
+#include "x.h"
 
 void set_x(int val) {
   x = val;

@@ -1,7 +1,7 @@
 static __thread int x;
 static __thread int y;
 
-void set(int valx, int valy) {
+void set_vals(int valx, int valy) {
   x = valx;
   y = valy;
 }

@@ -1,2 +1,6 @@
 *.o
 *.S
+*.so
+*.out
+*-dynamic
+*-static

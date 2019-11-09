@@ -1,6 +1,6 @@
 static __thread int x;
 
-void set(int valx) {
+void set_x(int valx) {
   x = valx;
 }
 

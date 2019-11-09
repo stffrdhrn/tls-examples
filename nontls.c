@@ -1,9 +1,10 @@
 static int x;
 
-void set(int val) {
+void set_x(int val) {
   x = val;
 }
 
 int* get_x_addr() {
   return &x;
 }
+
