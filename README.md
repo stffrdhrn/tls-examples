@@ -12,6 +12,8 @@ These examples were created in conjunction with my TLS documentation.
 
 ## Building
 
+[![Build Status](https://travis-ci.com/stffrdhrn/tls-examples.svg?branch=master)](https://travis-ci.com/stffrdhrn/tls-examples)
+
 To build just use:
 
 ```
