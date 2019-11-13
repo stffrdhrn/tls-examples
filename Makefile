@@ -5,18 +5,18 @@
 #  - 'clean' delete all build artifacts
 
 CROSS_COMPILE ?= or1k-smh-linux-gnu-
-CFLAGS        = -Wall -O2
+CFLAGS        = -Wall -O2 -g
 LDFLAGS       = -Wl,-rpath=. -L.
 CC            = $(CROSS_COMPILE)gcc
 OBJDUMP       = $(CROSS_COMPILE)objdump
 
 DYN_SRC       = tls-gd.c \
-		tls-ld.c \
 		nontls.c
 STATIC_SRC    = tls-le.c \
 		tls-ie.c \
 		nontls.c
-LIB_SRC       = x.c
+LIB_SRC       = x.c \
+		xy.c
 
 dyn_objs     := $(patsubst %.c,%-dynamic.o,$(DYN_SRC) $(LIB_SRC))
 static_objs  := $(patsubst %.c,%-static.o,$(STATIC_SRC) $(LIB_SRC))
@@ -24,7 +24,7 @@ static_objs  := $(patsubst %.c,%-static.o,$(STATIC_SRC) $(LIB_SRC))
 dyn_exe      := $(patsubst %.c,%-dynamic,$(DYN_SRC))
 static_exe   := $(patsubst %.c,%-static,$(STATIC_SRC))
 
-all_exe      := $(dyn_exe) $(static_exe)
+all_exe      := $(dyn_exe) $(static_exe) tls-ld-dynamic
 all_asm      := $(patsubst %.o,%.S,$(dyn_objs) $(static_objs))
 all_results  := $(patsubst %,test-results-%.out,$(all_exe))
 
@@ -45,15 +45,15 @@ all_objs: $(dyn_objs) $(static_objs)
 
 ## Building shared libs
 
-libx.so: x-dynamic.o
+lib%.so: %-dynamic.o
 	$(CC) -shared -o $@ $<
 
 ## Building executables
 tls-gd-dynamic: main.c tls-gd-dynamic.o libx.so
-	$(CC) -fpic -o $@ main.c tls-gd-dynamic.o -lx $(CFLAGS) $(LDFLAGS)
+	$(CC) -fpic -o $@ $< tls-gd-dynamic.o -lx $(CFLAGS) $(LDFLAGS)
 
-tls-ld-dynamic: main-ld.c tls-ld-dynamic.o
-	$(CC) -fpic -o $@ $^ $(CFLAGS)
+tls-ld-dynamic: main-ld.c libxy.so
+	$(CC) -fpic -o $@ $< -lxy $(CFLAGS) $(LDFLAGS)
 
 %-dynamic: main.c %-dynamic.o
 	$(CC) -fpic -o $@ $^ $(CFLAGS)
